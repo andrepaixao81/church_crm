@@ -1,4 +1,3 @@
-# Conteúdo do Dockerfile
 FROM php:8.1-apache
 
 # Instalar dependências necessárias
