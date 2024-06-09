@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+
+  churchcrm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: churchcrm
+    restart: always
+    ports:
+      - 6060:80
+    environment:
+      CHURCHCRM_DB_SERVER: db
+      CHURCHCRM_DB_PORT: 3306
+      CHURCHCRM_DB_USER: churchcrmuser
+      CHURCHCRM_DB_PASSWORD: churchcrmpassword
+      CHURCHCRM_DB_NAME: churchcrm
+    depends_on:
+      - db
+    volumes:
+      - churchcrm_data:/var/www/html
+
+  db:
+    image: mysql:5.7
+    container_name: churchcrm_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: churchcrm
+      MYSQL_USER: churchcrmuser
+      MYSQL_PASSWORD: churchcrmpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  churchcrm_data:
+  db_data:
